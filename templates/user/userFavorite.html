@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block content %}
+        Favorite Page
+        {% endblock %}
+    </title>
+</head>
+<body>
+    {% block body %}
+
+    <div class="container">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Product name</th>
+                    <th scope="col">Product Cost</th>
+                    <th scope="col">Product img</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <th scope="row">{{row.product_id}}</th>
+                    <td>{{row.product_name}}</td>
+                    <td>{{row.product_cost}}</td>
+                    <td><img src="{{url_for('static', filename='product/' + row.product_img)}}" alt="" width="100" height="100"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- <a href="/users/create" class="btn btn-primary">Add New User</a> -->
+        <a href="{{url_for('haslogin', user_type = data_user.user_type, user_id = data_user.user_id)}}" class="btn btn-primary">Back</a>
+    </div>
+    {% endblock %}
+</body>
+</html>

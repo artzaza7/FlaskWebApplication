@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block content %}
+        User Page
+        {% endblock %}
+    </title>
+</head>
+
+<body>
+    {% block body %}
+    <p>
+    <h1 align="center">
+        User Page
+    </h1>
+    </p>
+    {{ data }}
+    <p>
+        {% for row in product_data %}
+        {{row}}
+        {% endfor %}
+    </p>
+
+    <div class="container">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Product name</th>
+                    <th scope="col">Product Cost</th>
+                    <th scope="col">Product img</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in product_data %}
+                <tr>
+                    <th scope="row">{{row.product_id}}</th>
+                    <td>{{row.product_name}}</td>
+                    <td>{{row.product_cost}}</td>
+                    <td><img src="{{url_for('static', filename='product/' + row.product_img)}}" alt="" width="100" height="100"></td>
+                    <td>
+                        <a href="#" class="btn btn-warning">Edit</a>
+                        <a href="{{url_for('addProductToFavorite', user_type = data.user_type, user_id = data.user_id, product_id = row.product_id )}}" class="btn btn-primary"
+                            onclick="return confirm('ต้องเพิ่มหรือไม่')">Add</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- <a href="/users/create" class="btn btn-primary">Add New User</a> -->
+        <a href="{{url_for('hasLoginFavoriteProduct', user_type = data.user_type, user_id = data.user_id)}}" class="btn btn-primary">ProductFavorite</a>
+    </div>
+    {% endblock %}
+
+</body>
+
+</html>
